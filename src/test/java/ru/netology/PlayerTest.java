@@ -31,11 +31,9 @@ public class PlayerTest {
         Game game2 = new Game("Max Payne 2", "TPS", store);
         Game game3 = new Game("Max Payne 3", "TPS", store);
 
-        player.installGame(game1);
         player.installGame(game2);
         player.installGame(game3);
 
-        player.play(game1, 100);
 
         assertThrows(RuntimeException.class, () -> {
             player.play(game1, 100);
