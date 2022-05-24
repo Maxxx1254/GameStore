@@ -1,9 +1,27 @@
 package ru.netology;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class PlayerTest {
+
+    @Test
+    public void shouldSumGenreIfOneGame() {
+        GameStore store = new GameStore();
+        Game game = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+
+        Player player = new Player("Petya");
+        player.installGame(game);
+        player.play(game, 3);
+
+        int expected = 3;
+        int actual = player.sumGenre(game.getGenre());
+        assertEquals(expected, actual);
+    }
+
+    // другие ваши тесты
 
     @Test
     public void shouldSumGenresIfOneGameOneGenre() {
@@ -11,15 +29,14 @@ public class PlayerTest {
         Player player = new Player("Игрок");
 
         Game game = store.publishGame("Max Payne 1", "TPS");
+        Game game1 = store.publishGame("DOKA2", "MOBA");
 
         player.installGame(game);
-
-        store.addPlayTime("Игрок", 50);
 
         player.play(game, 50);
 
         int expected = 50;
-        int actual = Player.sumGenre("TPS");
+        int actual = player.sumGenre("TPS");
 
         assertEquals(expected, actual);
     }
@@ -38,16 +55,12 @@ public class PlayerTest {
         player.installGame(game2);
         player.installGame(game3);
 
-        store.addPlayTime("Игрок", 50);
-        store.addPlayTime("Игрок", 70);
-        store.addPlayTime("Игрок", 60);
-
         player.play(game1, 50);
         player.play(game2, 70);
         player.play(game3, 60);
 
         int expected = 180;
-        int actual = Player.sumGenre("TPS");
+        int actual = player.sumGenre("TPS");
 
         assertEquals(expected, actual);
     }
@@ -60,20 +73,14 @@ public class PlayerTest {
         Game game = store.publishGame("Max Payne 1", "TPS");
         player.installGame(game);
 
-        store.addPlayTime("Игрок", 50);
-        store.addPlayTime("Игрок", 51);
-
-
         player.play(game, 51);
         player.play(game, 50);
 
-
-        int expected = 50;
-        int actual = Player.sumGenre("TPS");
+        int expected = 101;
+        int actual = player.sumGenre("TPS");
 
         assertEquals(expected, actual);
     }
-
 
 
     @Test
@@ -91,18 +98,13 @@ public class PlayerTest {
         player.installGame(game3);
         player.installGame(game4);
 
-        store.addPlayTime("Игрок", 50);
-        store.addPlayTime("Игрок", 70);
-        store.addPlayTime("Игрок", 60);
-        store.addPlayTime("Игрок", 80);
-
         player.play(game1, 50);
         player.play(game2, 70);
         player.play(game3, 60);
         player.play(game4, 80);
 
         int expected = 150;
-        int actual = Player.sumGenre("MOBA");
+        int actual = player.sumGenre("MOBA");
 
         assertEquals(expected, actual);
     }
@@ -114,16 +116,17 @@ public class PlayerTest {
 
         Game game1 = store.publishGame("NFS Underground", "Racing");
         Game game2 = store.publishGame("Forza", "Racing");
+        Game game3 = store.publishGame("DOKA", "MOBA");
 
         player.installGame(game1);
         player.installGame(game2);
 
-        player.play(game1, 15);
+        player.play(game1, 25);
         player.play(game2, 20);
 
-        Game actual = player.getMostPopularGameByGenre();
+        Game actual = player.mostPlayerByGenre(game2.getGenre());
 
-        assertEquals(game2, actual);
+        assertEquals(game1, actual);
     }
 
     @Test
@@ -140,10 +143,10 @@ public class PlayerTest {
         player.play(game1, 15);
         player.play(game2, 20);
 
-        Game expected = game2;
-        Game actual = player.getMostPopularGameByGenre();
+        Game expected = null;
+        Game actual = player.mostPlayerByGenre("Fighting");
 
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @Test

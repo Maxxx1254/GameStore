@@ -22,7 +22,8 @@ public class Game {
         return genre;
     }
 
-    public void getStore() {
+    public GameStore getStore() {
+        return store;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class Game {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Game game = (Game) o;
-        return Objects.equals(title, title) &&
+        return Objects.equals(title, game.title) &&
                 Objects.equals(genre, game.genre) &&
                 Objects.equals(store, game.store);
     }
