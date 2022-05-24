@@ -3,18 +3,18 @@ package ru.netology;
 import java.util.Objects;
 
 public class Game {
-    private static String title;
+    private final String title;
     private final String genre;
     private final GameStore store;
 
     public Game(String title, String genre, GameStore store) {
-        Game.title = title;
+        this.title = title;
         this.genre = genre;
         this.store = store;
     }
 
 
-    public static String getTitle() {
+    public String getTitle() {
         return title;
     }
 

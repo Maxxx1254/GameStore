@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Player {
     protected static String name;
-    protected String[] gamesOfPlayer;
+    protected String[] gamesOfPlayers = new String[1];
     /** информация о том, в какую игру сколько часов было сыграно
      ключ - игра
      значение - суммарное количество часов игры в эту игру */
@@ -23,19 +23,22 @@ public class Player {
      * добавление игры игроку
      * если игра уже была, никаких изменений происходить не должно
      */
-    public String installGame(String title) {
-        for (int i = 1; i < ; i++) {
-            if (Game.getTitle().equals(title)) {
-            }
+    public Game installGame(Game game) {
+        int length = gamesOfPlayers.length + 1;
+        String[] tmp = new String[length];
+        System.arraycopy(gamesOfPlayers, 0, tmp, 0, gamesOfPlayers.length);
+        for (String title : gamesOfPlayers) {
+                if (game.getTitle().equals(gamesOfPlayers)) {return game;}
+                int lastGame = tmp.length - 1;
+                tmp[lastGame] = title;
+                gamesOfPlayers = tmp;
         }
-        return title;
+        return game;
     }
 
-    public String findByTitle(String title) {
-        for (int i = 0; i < 2; i++) {
-            if (Game.getTitle().equals(title)) {
-                return title;
-            }
+    public Game findByTitle(Game game) {
+        for (String title : gamesOfPlayers) {
+            if (game.getTitle().equals(gamesOfPlayers)) {return game;}
         }
         return null;
     }
@@ -47,8 +50,8 @@ public class Player {
      * если игра не была установлена, то надо выкидывать RuntimeException
      */
     public void play(Game game, int hours) {
-        if (findByTitle(Game.getTitle()) == null) {
-            throw new NotFoundGame( "Not found games.");
+        if (findByTitle(game) == null) {
+            throw new NotFoundGame( "Not found games " + game.getTitle() + ".");
         }
         game.getStore();
         playedTime.put(game, playedTime.getOrDefault(game, hours));

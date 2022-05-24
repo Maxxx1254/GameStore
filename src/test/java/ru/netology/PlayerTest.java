@@ -12,7 +12,7 @@ public class PlayerTest {
 
         Game game = store.publishGame("Max Payne 1", "TPS");
 
-        player.installGame("Max Payne 1");
+        player.installGame(game);
 
         store.addPlayTime("Игрок", 50);
 
@@ -34,9 +34,9 @@ public class PlayerTest {
         Game game2 = store.publishGame("Max Payne 2", "TPS");
         Game game3 = store.publishGame("Max Payne 3", "TPS");
 
-        player.installGame("Max Payne 1");
-        player.installGame("Max Payne 2");
-        player.installGame("Max Payne 3");
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
 
         store.addPlayTime("Игрок", 50);
         store.addPlayTime("Игрок", 70);
@@ -58,7 +58,7 @@ public class PlayerTest {
         Player player = new Player("Игрок");
 
         Game game = store.publishGame("Max Payne 1", "TPS");
-        player.installGame("Max Payne 1");
+        player.installGame(game);
 
         store.addPlayTime("Игрок", 50);
         store.addPlayTime("Игрок", 51);
@@ -86,10 +86,10 @@ public class PlayerTest {
         Game game3 = store.publishGame("Counter-Strike", "FPS");
         Game game4 = store.publishGame("DOKA 2", "MOBA");
 
-        player.installGame("Max Payne 1");
-        player.installGame("DOTA");
-        player.installGame("Counter-Strike");
-        player.installGame("DOKA 2");
+        player.installGame(game1);
+        player.installGame(game2);
+        player.installGame(game3);
+        player.installGame(game4);
 
         store.addPlayTime("Игрок", 50);
         store.addPlayTime("Игрок", 70);
@@ -115,8 +115,8 @@ public class PlayerTest {
         Game game1 = store.publishGame("NFS Underground", "Racing");
         Game game2 = store.publishGame("Forza", "Racing");
 
-        player.installGame("NFS Underground");
-        player.installGame("Forza");
+        player.installGame(game1);
+        player.installGame(game2);
 
         player.play(game1, 15);
         player.play(game2, 20);
@@ -134,15 +134,16 @@ public class PlayerTest {
         Game game1 = new Game("NFS Underground", "Racing", store);
         Game game2 = new Game("Forza", "Racing", store);
 
-        player.installGame("NFS Underground");
-        player.installGame("Forza");
+        player.installGame(game1);
+        player.installGame(game2);
 
         player.play(game1, 15);
         player.play(game2, 20);
 
+        Game expected = game2;
         Game actual = player.getMostPopularGameByGenre();
 
-        assertNull(actual);
+        assertEquals(expected,actual);
     }
 
     @Test
@@ -152,6 +153,7 @@ public class PlayerTest {
 
         Game game1 = store.publishGame("Max Payne 1", "TPS");
 
-        assertThrows(RuntimeException.class, () -> player.play(game1, 100));
+        assertThrows(RuntimeException.class, () ->
+                player.play(game1, 100));
     }
 }
